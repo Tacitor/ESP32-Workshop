@@ -11,6 +11,7 @@
 #include <Arduino.h>
 
 #include "ESP_LED.h"
+#include "ESP_BLE.h"
 
 BLECharacteristic *pCharacteristic;
 bool deviceConnected = false;
@@ -138,4 +139,11 @@ void proc_BT()
 
     rxload = "";
   }
+}
+
+void tx_BT(String str) {
+      const char *newValue=str.c_str();
+      Serial.printf("tx: %s\n", newValue);
+      pCharacteristic->setValue(newValue);
+      pCharacteristic->notify();
 }

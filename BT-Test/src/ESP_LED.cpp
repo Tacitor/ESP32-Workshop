@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "ESP_LED.h"
+#include "ESP_BLE.h"
 
 // variable declarations
 int ledState[NUM_LEDS];
@@ -7,6 +8,8 @@ int leds[NUM_LEDS] = {LED0, LED1, LED2};
 int swStatePrev[NUM_SWS];
 int swState[NUM_SWS];
 int sws[] = {SW0, SW1, SW2, SW3};
+
+String chars[] = {"A", "a", "b"};
 
 void setup_LED()
 {
@@ -67,6 +70,9 @@ void ledTask(int ledNum)
 
     delay(100);
 
+    // Tansmit a charcter for this LED-SW combo.
+    tx_BT(chars[ledNum]);
+    // The LED lights up as a visual indicator that the TX has been sent over BLE.
     setLED(ledNum, HIGH);
 
     delay(100);
